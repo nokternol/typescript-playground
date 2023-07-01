@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node index",
-    "test": "mocha -r ts-node/register 'test/**/*.ts'"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
