@@ -44,4 +44,40 @@ describe('deepReadonly', () => {
     readOnlyArray.forEach((_, i) => (readOnlyArray as any)[i]++);
     expect(readOnlyArray).deep.equal(array);
   });
+  it('should protect deeply nested properties', () => {
+    const originalValue = 5;
+    const input = { root: { [1]: [{ [2]: { [3]: originalValue }}]}};
+    const adjustedValue = 6;
+    input.root[1][0][2][3] = adjustedValue;
+    expect(input.root[1][0][2][3]).to.equal(adjustedValue);
+    
+    const immutable = deepReadonly(input);
+    try {
+      /**
+       * cast to any as TS knows the assignment is readonly 
+       * has to be wrapped in try/catch as the assignment throws a runtime error
+       */
+      (immutable.root[1][0][2][3] as any) = originalValue;
+    } catch {}
+    
+    expect(immutable.root[1][0][2][3]).to.equal(adjustedValue);
+  });
+  it('should prevent assignment of a new date to a nested property', () => {
+    const originalValue = new Date(1990, 0, 1);
+    const input = { root: { [1]: [{ [2]: { [3]: originalValue }}]}};
+    const adjustedValue = new Date(1980, 0, 1);
+    input.root[1][0][2][3] = adjustedValue;
+    expect(input.root[1][0][2][3]).to.equal(adjustedValue);
+    
+    const immutable = deepReadonly(input);
+    try {
+      /**
+       * cast to any as TS knows the assignment is readonly 
+       * has to be wrapped in try/catch as the assignment throws a runtime error
+       */
+      (immutable.root[1][0][2][3] as any) = originalValue;
+    } catch {}
+    
+    expect(immutable.root[1][0][2][3]).to.equal(adjustedValue);
+  });
 });

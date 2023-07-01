@@ -12,6 +12,8 @@ type DeepReadonlyObject<T> = {
 
 /**
  * Protect the runtime code from mutation
+ * caveats: JS Dates cannot be frozen with Object.freeze but they are also not easy to accidentally 
+ * mutate date.setMonth() is quite deliberate
  * @param input 
  * @returns 
  */
