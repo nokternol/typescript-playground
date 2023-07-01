@@ -30,7 +30,7 @@ describe('deepReadonly', () => {
     const result = deepReadonly({ key: 'value' })
     expect(Object.assign.bind(result, { key: 'another value'})).to.throw;
   });
-  it('should freeze array contents', () => {
+  it('should not allow Object.assign', () => {
     const result = deepReadonly({ arr: ['value1', 'value2', 'value3'] }) as any;
     expect(result.arr.push.bind(result, 'value4')).to.throw;
   });
@@ -38,7 +38,7 @@ describe('deepReadonly', () => {
     const result = deepReadonly({ arr: ['value1', 'value2', 'value3'] }) as any;
     expect(result.arr.reverse.bind(result)).to.throw;
   });
-  it('should protect array contents', () => {
+  it('should not allow indexed assignment', () => {
     const array = new Array(100).map((_, i) => i);
     const readOnlyArray = deepReadonly(array);
     readOnlyArray.forEach((_, i) => (readOnlyArray as any)[i]++);
