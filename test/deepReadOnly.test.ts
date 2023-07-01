@@ -13,6 +13,14 @@ describe('deepReadonly', () => {
     expect(deepReadonly.bind(null, null as any)).to.throw;
     expect(deepReadonly.bind(null, undefined as any)).to.throw;
   });
+  it('should gracefully handle object types', () => {
+    const date = new Date();
+    expect(deepReadonly(date)).to.equal(date);
+
+    const array = new Array(100).map((_, i) => i);
+    expect(deepReadonly(array)).to.equal(array);
+
+  });
   it('will return the same object', () => {
     const input = { key: 'value' };
     const result: DeepReadonly<typeof input> = deepReadonly(input)
