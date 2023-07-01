@@ -1,0 +1,29 @@
+{
+  "name": "nokternol-typescript-playground",
+  "version": "1.0.0",
+  "description": "A personal typescript education",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node index",
+    "test": "mocha -r ts-node/register 'test/**/*.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nokternol/typescript-playground.git"
+  },
+  "author": "Mark Butterworth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nokternol/typescript-playground/issues"
+  },
+  "homepage": "https://github.com/nokternol/typescript-playground#readme",
+  "devDependencies": {
+    "@types/chai": "4.3.5",
+    "@types/mocha": "10.0.1",
+    "chai": "4.3.7",
+    "mocha": "10.2.0",
+    "ts-node": "10.9.1",
+    "tsc": "2.0.4",
+    "typescript": "5.1.6"
+  }
+}

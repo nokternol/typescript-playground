@@ -1,0 +1,1 @@
+type DeepReadonly<T> = Readonly<T>;
