@@ -2,11 +2,20 @@ import { deepReadonly, type DeepReadonly } from '../utils/deepReadOnly/deepReadO
 import { expect } from 'chai';
 
 describe('deepReadonly', () => {
-  it('wont support primitives', () => {
+  it('should only accept objects', () => {
+    //non-object types
     expect(deepReadonly.bind(null, 'value' as any)).to.throw;
+    expect(deepReadonly.bind(null, 1 as any)).to.throw;
+    expect(deepReadonly.bind(null, Symbol('key') as any)).to.throw;
+    expect(deepReadonly.bind(null, function() {} as any)).to.throw;
+    expect(deepReadonly.bind(null, true as any)).to.throw;
+    // empty values
+    expect(deepReadonly.bind(null, null as any)).to.throw;
+    expect(deepReadonly.bind(null, undefined as any)).to.throw;
   });
   it('will return the same object', () => {
-    const result = deepReadonly({ key: 'value' })
+    const input = { key: 'value' };
+    const result: DeepReadonly<typeof input> = deepReadonly(input)
     expect(result).to.eql({ key: 'value' });
   });
   it('will not allow re-assignment', () => {
@@ -17,6 +26,9 @@ describe('deepReadonly', () => {
     const result = deepReadonly({ arr: ['value1', 'value2', 'value3'] }) as any;
     expect(result.arr.push.bind(result, 'value4')).to.throw;
   });
-  
+  it('should not allow mutating array methods', () => {
+    const result = deepReadonly({ arr: ['value1', 'value2', 'value3'] }) as any;
+    expect(result.arr.reverse.bind(result)).to.throw;
+  });
 
 });
