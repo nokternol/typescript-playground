@@ -38,5 +38,10 @@ describe('deepReadonly', () => {
     const result = deepReadonly({ arr: ['value1', 'value2', 'value3'] }) as any;
     expect(result.arr.reverse.bind(result)).to.throw;
   });
-
+  it('should protect array contents', () => {
+    const array = new Array(100).map((_, i) => i);
+    const readOnlyArray = deepReadonly(array);
+    readOnlyArray.forEach((_, i) => (readOnlyArray as any)[i]++);
+    expect(readOnlyArray).deep.equal(array);
+  });
 });
