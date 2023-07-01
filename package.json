@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/nokternol/typescript-playground#readme",
   "devDependencies": {
+    "@tsconfig/node20": "1.0.2",
     "@types/chai": "4.3.5",
     "@types/mocha": "10.0.1",
     "chai": "4.3.7",
