@@ -80,4 +80,11 @@ describe('deepReadonly', () => {
     
     expect(immutable.root[1][0][2][3]).to.equal(adjustedValue);
   });
+
+  it('should prevent mutation of Date objects via their set* methods', () => {
+    const date = new Date(1990, 0, 1);
+    const readOnlyDate = deepReadonly(date);
+    readOnlyDate.setFullYear(1991);
+    expect(readOnlyDate.getFullYear()).to.equal(1990);
+  });
 });
